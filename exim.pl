@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 sub randinet {
-@inet = ("192.186.0.27");
+@inet = ("192.186.0.25");
 return $inet[int rand($#inet)];
 }
 

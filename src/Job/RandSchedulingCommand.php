@@ -80,11 +80,20 @@ class RandSchedulingCommand extends Command
             array_push($ipsSeted, $ipSeted);
             $this->cacheService->setCacheValue("ips_seted", $ipsSeted);
             $this->cacheService->setCacheValue("ip_last", [$ipSeted]);
+            $this->restartServiceExim($output);
         }
     }
 
-    protected function restartServiceExim()
+    protected function restartServiceExim(OutputInterface $outputCmd)
     {
-        
+        $command = 'sudo systemctl restart exim';
+        $output = [];
+        $returnVar = 0;
+        exec($command, $output, $returnVar);
+        if ($returnVar === 0) {
+            $outputCmd->writeln("<info>Serviço Exim reiniciado com sucesso.</info>");
+        } else {
+            $outputCmd->writeln("<error>Falha ao reiniciar o serviço Exim. Código de erro: $returnVar</error>");
+        }
     }
 }
