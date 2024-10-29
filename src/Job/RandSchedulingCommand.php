@@ -41,8 +41,8 @@ class RandSchedulingCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //$this->changeLine('/etc/exim.pl', 4, 'Nova linha 4');
-        $this->changeLine('/Users/dereckleme/www/ip_rand_command/exim.pl', 4, $output);
+        $this->changeLine('/etc/exim.pl', 4, $output);
+        //$this->changeLine('/Users/dereckleme/www/ip_rand_command/exim.pl', 4, $output);
 
         return Command::SUCCESS;
     }
