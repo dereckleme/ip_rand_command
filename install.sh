@@ -44,42 +44,18 @@ install_php() {
     fi
 }
 
-# Função para instalar o Composer
-install_composer() {
-    echo "Instalando o Composer..."
-    EXPECTED_SIGNATURE="$(curl -sS https://composer.github.io/installer.sig)"
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
-
-    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then
-        >&2 echo 'Erro: Assinatura do installer do Composer inválida.'
-        rm composer-setup.php
-        exit 1
-    fi
-
-    php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-    RESULT=$?
-    rm composer-setup.php
-    if [ $RESULT -eq 0 ]; then
-        echo "Composer instalado com sucesso!"
-    else
-        echo "Erro ao instalar o Composer."
-    fi
-}
-
 # Executa as funções de instalação
 install_git
 install_php
-install_composer
 
 # Clona o repositório na mesma pasta onde o script está
 SCRIPT_DIR=$(dirname "$0")
 echo "Clonando o repositório no diretório do script: $SCRIPT_DIR"
 git clone https://github.com/dereckleme/ip_rand_command.git "$SCRIPT_DIR/ip_rand_command"
 
-# Executa o Composer install dentro da pasta ip_rand_command
-echo "Executando 'composer install' na pasta ip_rand_command..."
+# Executa o Composer install usando o composer.phar na pasta ip_rand_command
+echo "Executando 'composer install' na pasta ip_rand_command com composer.phar..."
 cd "$SCRIPT_DIR/ip_rand_command" || exit
-composer install
+php composer.phar install
 
 echo "Instalação, clonagem e dependências concluídas."
