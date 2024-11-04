@@ -15,10 +15,10 @@ echo "Distribuição detectada: $DISTRO"
 install_git() {
     echo "Instalando o Git..."
     if [ "$DISTRO" == "debian" ] || [ "$DISTRO" == "ubuntu" ]; then
-        sudo apt update
-        sudo apt install -y git
+        apt update
+        apt install -y git
     elif [ "$DISTRO" == "centos" ] || [ "$DISTRO" == "rocky" ] || [ "$DISTRO" == "rhel" ]; then
-        sudo dnf install -y git
+        dnf install -y git
     else
         echo "Distribuição não suportada para a instalação do Git."
     fi
@@ -28,17 +28,17 @@ install_git() {
 install_php() {
     echo "Instalando o PHP 8.3..."
     if [ "$DISTRO" == "debian" ] || [ "$DISTRO" == "ubuntu" ]; then
-        sudo apt update
-        sudo apt install -y software-properties-common
-        sudo add-apt-repository -y ppa:ondrej/php
-        sudo apt update
-        sudo apt install -y php8.3
+        apt update
+        apt install -y software-properties-common
+        add-apt-repository -y ppa:ondrej/php
+        apt update
+        apt install -y php8.3 php8.3-json
     elif [ "$DISTRO" == "centos" ] || [ "$DISTRO" == "rocky" ] || [ "$DISTRO" == "rhel" ]; then
-        sudo dnf install -y epel-release
-        sudo dnf install -y dnf-utils
-        sudo dnf module reset php -y
-        sudo dnf module enable php:remi-8.3 -y
-        sudo dnf install -y php
+        dnf install -y epel-release
+        dnf install -y dnf-utils
+        dnf module reset php -y
+        dnf module enable php:remi-8.3 -y
+        dnf install -y php php-json
     else
         echo "Distribuição não suportada para a instalação do PHP 8.3."
     fi
