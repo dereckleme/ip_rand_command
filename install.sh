@@ -85,8 +85,8 @@ install_composer() {
 
 # Executa as funções de instalação
 install_git
-install_apache
-install_php
+#install_apache
+#install_php
 install_composer
 
 # Clona o repositório na mesma pasta onde o script está
