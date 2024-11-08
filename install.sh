@@ -24,6 +24,21 @@ install_git() {
     fi
 }
 
+# Função para instalar ou atualizar o Apache e reiniciar o serviço
+install_apache() {
+    echo "Instalando ou atualizando o Apache..."
+    if [ "$DISTRO" == "debian" ] || [ "$DISTRO" == "ubuntu" ]; then
+        apt update
+        apt install -y apache2
+        systemctl restart apache2
+    elif [ "$DISTRO" == "centos" ] || [ "$DISTRO" == "rocky" ] || [ "$DISTRO" == "rhel" ]; then
+        dnf install -y httpd
+        systemctl restart httpd
+    else
+        echo "Distribuição não suportada para a instalação do Apache."
+    fi
+}
+
 # Função para instalar o PHP 8.3
 install_php() {
     echo "Instalando o PHP 8.3..."
@@ -70,6 +85,7 @@ install_composer() {
 
 # Executa as funções de instalação
 install_git
+install_apache
 install_php
 install_composer
 
